@@ -1,0 +1,21 @@
+name: Generate Baseline Profiles
+
+on: workflow_dispatch
+
+jobs:
+  change-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Change something
+        run: |
+          find . -type f -name "*.md" -print0 | xargs -0 sed -i "s/foo/bar/g"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Updated baseline profiles
+          title: Updated baseline profiles
+          body: ""
+          branch: update-baseline-profiles
